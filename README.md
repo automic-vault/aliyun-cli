@@ -1,3 +1,23 @@
+# Automic Vault Fork Notes
+
+This repository is the Automic Vault fork of Alibaba Cloud CLI.
+
+Automic Vault is a macOS-first system that keeps developer credentials in
+custody and applies them only after policy or the user allows the complete
+operation requested by verified software.
+
+The [Alibaba Cloud CLI Hardener work](https://github.com/automic-vault/automic-vault/issues/186)
+uses the CLI's native External credential-provider boundary so AccessKey and
+STS credentials no longer need to remain in plaintext configuration. Automic
+Vault's reviewed release process builds and signs the executable with Hardened
+Runtime and no entitlements; the Hardener verifies its release digest and
+Automic Vault identity before installation.
+
+This source fork alone does not establish Hardened State. The remainder of this
+README is the original upstream Alibaba Cloud CLI README.
+
+---
+
 English | [简体中文](./README-CN.md)
 
 <h1 align="center">Alibaba Cloud CLI</h1>
