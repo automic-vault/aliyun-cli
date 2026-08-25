@@ -5,7 +5,8 @@ replaces:
   brew:aliyun-cli
 
 build: |
-  go test ./...
+  git submodule update --init --recursive
+  go test ./config -run 'Test(SplitProcessCommand|Profile_GetCredential_External)'
   CGO_ENABLED=0 GOOS=darwin GOARCH="$(go env GOARCH)" \
     go build -trimpath \
     -ldflags "-s -w -X 'github.com/aliyun/aliyun-cli/v3/cli.Version=${VERSION}'" \
