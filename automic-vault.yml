@@ -6,8 +6,8 @@ replaces:
 
 build: |
   git submodule update --init --recursive
-  GOTOOLCHAIN=go1.23.8 go test ./config -run 'Test(SplitProcessCommand|Profile_GetCredential_External)'
-  CGO_ENABLED=0 GOOS=darwin GOARCH="$(go env GOARCH)" GOTOOLCHAIN=go1.23.8 \
+  GOTOOLCHAIN=go1.25.14 go test ./config -run 'Test(SplitProcessCommand|Profile_GetCredential_External)'
+  CGO_ENABLED=0 GOOS=darwin GOARCH="$(go env GOARCH)" GOTOOLCHAIN=go1.25.14 \
     go build -trimpath \
     -ldflags "-s -w -X 'github.com/aliyun/aliyun-cli/v3/cli.Version=${VERSION}'" \
     -o aliyun main/main.go
