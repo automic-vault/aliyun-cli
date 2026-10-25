@@ -7,8 +7,9 @@ replaces:
 build: |
   git submodule update --init --recursive
   GOTOOLCHAIN=go1.26.9 go test ./config -run 'Test(SplitProcessCommand|Profile_GetCredential_External)'
+  GOTOOLCHAIN=go1.26.9 go generate ./bundledmeta
   CGO_ENABLED=0 GOOS=darwin GOARCH="$(go env GOARCH)" GOTOOLCHAIN=go1.26.9 \
-    go build -trimpath \
+    go build -trimpath -tags aliyun_cli_packed_meta \
     -ldflags "-s -w -X 'github.com/aliyun/aliyun-cli/v3/cli.Version=${VERSION}'" \
     -o aliyun ./main
   mkdir -p bin
@@ -17,7 +18,12 @@ build: |
     --identifier aliyun \
     --sign "$CODESIGN_IDENTITY" \
     bin/aliyun
-  tar czf out.tgz bin/aliyun
+  # Test outside the source tree so development metadata cannot hide missing assets.
+  executable="$PWD/bin/aliyun"
+  smoke_dir="$(mktemp -d)"
+  (cd "$smoke_dir" && HOME="$smoke_dir" "$executable" version)
+  rm -rf "$smoke_dir"
+  COPYFILE_DISABLE=1 tar czf out.tgz bin/aliyun
 
 justification:
   title:
