@@ -6,9 +6,9 @@ replaces:
 
 build: |
   git submodule update --init --recursive
-  GOTOOLCHAIN=go1.26.9 go test ./config -run 'Test(SplitProcessCommand|Profile_GetCredential_External)'
-  GOTOOLCHAIN=go1.26.9 go generate ./bundledmeta
-  CGO_ENABLED=0 GOOS=darwin GOARCH="$(go env GOARCH)" GOTOOLCHAIN=go1.26.9 \
+  GOTOOLCHAIN=go1.26.11 go test ./config -run 'Test(SplitProcessCommand|Profile_GetCredential_External)'
+  GOTOOLCHAIN=go1.26.11 go generate ./bundledmeta
+  CGO_ENABLED=0 GOOS=darwin GOARCH="$(go env GOARCH)" GOTOOLCHAIN=go1.26.11 \
     go build -trimpath -tags aliyun_cli_packed_meta \
     -ldflags "-s -w -X 'github.com/aliyun/aliyun-cli/v3/cli.Version=${VERSION}'" \
     -o aliyun ./main
